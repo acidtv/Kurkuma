@@ -1,0 +1,70 @@
+
+#articles-wrap {
+	table-layout: fixed;
+}
+
+#articles .content {
+	display: none;
+}
+
+#articles a.title {
+	cursor: pointer;
+}
+
+#articles span.date {
+	float: right;
+	color: #AAA;
+}
+
+#articles tr:first-child td {
+	border-top: none !important;
+}
+
+#articles .feed {
+	width: 100px !important;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#articles a.title {
+	float: left;
+	display: block;
+	width: 650px !important;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#articles .selected, #articles .read {
+	background: #EEE;
+}
+
+#articles .selected .content {
+	clear: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-right: 100px;
+	display: block;
+}
+
+#articles .selected a.title {
+	font-weight: bold;
+	color: black;
+}
+
+#articles .content h1 {
+	font-size: 25px;
+}
+
+#articles .content h2 {
+	font-size: 20px;
+}
+
+#articles .content h3 {
+	font-size: 18px;
+}
+
+#articles .content h4 {
+	font-size: 16px;
+}
