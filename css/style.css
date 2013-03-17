@@ -1,4 +1,24 @@
 
+#feed-list li {
+	/*width: 100px !important;*/
+	margin-bottom: 3px;
+	float: left;
+	width: 150px;
+}
+
+#feed-list .badge {
+	float: right;
+}
+
+#feed-list .name {
+	width: 100px;
+	float: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-top: 0px;
+}
+
 #articles-wrap {
 	table-layout: fixed;
 }

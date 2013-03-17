@@ -7,17 +7,20 @@ class Controller_Ajax_Feeds extends Kohana_Controller_Rest {
 	 */
 	public function action_index()
 	{
-		$feeds = ORM::factory('Feed')->find_all();	
+		$user = ORM::factory('User', 1);
+		$feeds = ORM::factory('Feed')->get_with_unread_count($user);
 
-		$feeds_array = array();
-		foreach ($feeds as $feed)
-		{
-			$feeds_array[] = $feed->as_array();
-		}
+		//$feeds = ORM::factory('Feed')->find_all();	
+
+		//$feeds_array = array();
+		//foreach ($feeds as $feed)
+		//{
+			//$feeds_array[] = $feed->as_array();
+		//}
 
 		$return = array(
 			'result' => 'ok',
-			'data' => $feeds_array,
+			'data' => $feeds,
 		);
 
 		$this->response->body(json_encode($return));

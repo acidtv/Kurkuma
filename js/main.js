@@ -6,7 +6,18 @@ $(document).ready(function () {
 			return;
 		
 		$.each(reply.data, function(key, value) {
-			$('<li>' + value.name + '<li>').appendTo('#feed-list');
+			feed = $('<a></a>')
+				.addClass('name')
+				.html(value.name);
+			badge = $('<span></span>')
+				.addClass('badge')
+				.html(value._unread);
+			row = $('<li></li>')
+				.append(feed)
+				.append(badge)
+
+			$('#feed-list').append(row);
+			//$('<li><a class="name">' + value.name + '</a><span class="badge">' + value._unread + '</span><li>').appendTo('#feed-list');
 		})
 	});
 	
