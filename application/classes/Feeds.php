@@ -88,8 +88,20 @@ class Feeds {
 		$feed->user = $user;
 		$feed->url = $url;
 		$feed->name = $client->get_title();
-		$feed->save();
 
+		try
+		{
+			$feed->save();
+		}
+		catch (Database_Exception $e)
+		{
+			if ($e->getCode() != 1062)
+				throw $e;
+
+			// this feed already exists
+		}
+
+		$user->add('feeds', $feed);
 		$this->update_articles($feed, $client);
 
 		return $feed;

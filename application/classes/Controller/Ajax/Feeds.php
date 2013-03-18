@@ -10,14 +10,6 @@ class Controller_Ajax_Feeds extends Kohana_Controller_Rest {
 		$user = ORM::factory('User', 1);
 		$feeds = ORM::factory('Feed')->get_with_unread_count($user);
 
-		//$feeds = ORM::factory('Feed')->find_all();	
-
-		//$feeds_array = array();
-		//foreach ($feeds as $feed)
-		//{
-			//$feeds_array[] = $feed->as_array();
-		//}
-
 		$return = array(
 			'result' => 'ok',
 			'data' => $feeds,

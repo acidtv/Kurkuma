@@ -1,35 +1,10 @@
 
 $(document).ready(function () {
 	// load all feeds
-	$.getJSON('/ajax/feeds', function(reply) {
-		if (reply.result != 'ok')
-			return;
-		
-		$.each(reply.data, function(key, value) {
-			feed = $('<a></a>')
-				.addClass('name')
-				.html(value.name);
-			badge = $('<span></span>')
-				.addClass('badge')
-				.html(value._unread);
-			row = $('<li></li>')
-				.attr('data-feed-id', value.id)
-				.append(feed)
-				.append(badge)
-				.data('id', value.id)
-
-			$('#feed-list').append(row);
-			//$('<li><a class="name">' + value.name + '</a><span class="badge">' + value._unread + '</span><li>').appendTo('#feed-list');
-		})
-	});
+	reset_feeds();
 	
 	// load bunch of articles
-	$.getJSON('/ajax/articles', function(reply) {
-		if (reply.result != 'ok')
-			return;
-		
-		render_articles(reply.data);
-	});
+	reset_articles();
 
 	// show articles from selected feed
 	$('#feed-list').on('click', 'li', function() {
@@ -62,7 +37,12 @@ $(document).ready(function () {
 			$(row).addClass('read');
 
 			badge = $('#feed-list li[data-feed-id="' + $(row).data('feed-id') + '"] .badge');
-			badge.html(badge.html()-1);
+			count = badge.html()-1;
+			if (count < 1) {
+				badge.hide();
+			} else {
+				badge.html(badge.html()-1);
+			}
 		}
 
 		return false;
@@ -80,12 +60,12 @@ $(document).ready(function () {
 			if (reply.result != 'ok')
 				return;
 
-			$('<li>' + reply.data.feed.name + '<li>').appendTo('#feed-list');
-
+			reset_feeds();
 			render_articles(reply.data.articles);
 		});
 
 		$('#modal-add-feed').modal('hide');
+		$('#modal-add-feed form').reset();
 
 		return false;
 	});
@@ -95,8 +75,41 @@ $(document).ready(function () {
 		$('#modal-add-feed form').submit();
 	});
 
+	function reset_feeds() {
+		$.getJSON('/ajax/feeds', function(reply) {
+			if (reply.result != 'ok')
+				return;
+			
+			$.each(reply.data, function(key, value) {
+				feed = $('<a></a>')
+					.addClass('name')
+					.html(value.name);
+				badge = $('<span></span>')
+					.addClass('badge')
+					.html(value._unread);
+				row = $('<li></li>')
+					.attr('data-feed-id', value.id)
+					.append(feed)
+					.append(badge)
+					.data('id', value.id)
+
+				$('#feed-list').append(row);
+			})
+		});
+	}
+
+	function reset_articles() {
+		$.getJSON('/ajax/articles', function(reply) {
+			if (reply.result != 'ok')
+				return;
+			
+			render_articles(reply.data);
+		});
+	}
+
 	function render_articles(articles) {
 		$('#articles').empty();
+		window.scrollTo(0,0);
 
 		$.each(articles, function(key, value) {
 			feed = $('<td></td>').addClass('feed').html(value.feed.name);
