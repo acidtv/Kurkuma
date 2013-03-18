@@ -11,7 +11,14 @@ class Controller_Ajax_Articles extends Kohana_Controller_Rest {
 			->select(array('uar.article_id', '_read'))
 			->join(array('users_articles_read', 'uar'), 'left outer')
 				->on('uar.article_id', '=', 'article.id')
-			->with('feed')
+			->with('feed');
+
+		if ($this->request->query('id'))
+		{
+			$articles->where('feed_id', '=', $this->request->query('id'));
+		}
+
+		$articles = $articles
 			->order_by('pub_date', 'desc')
 			->limit(100)
 			->find_all()

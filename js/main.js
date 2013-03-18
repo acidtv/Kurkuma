@@ -13,8 +13,10 @@ $(document).ready(function () {
 				.addClass('badge')
 				.html(value._unread);
 			row = $('<li></li>')
+				.attr('data-feed-id', value.id)
 				.append(feed)
 				.append(badge)
+				.data('id', value.id)
 
 			$('#feed-list').append(row);
 			//$('<li><a class="name">' + value.name + '</a><span class="badge">' + value._unread + '</span><li>').appendTo('#feed-list');
@@ -29,6 +31,14 @@ $(document).ready(function () {
 		render_articles(reply.data);
 	});
 
+	// show articles from selected feed
+	$('#feed-list').on('click', 'li', function() {
+		id = $(this).data('id');
+		$.getJSON('/ajax/articles', {id: id}, function(reply) {
+			render_articles(reply.data);
+		});
+	});
+	
 	// show selected article
 	$('#articles').on('click', 'a.title', function() {
 		scroll = false;
@@ -50,6 +60,9 @@ $(document).ready(function () {
 		if ( ! $(row).hasClass('read')) {
 			$.post('/ajax/read', {article: $(row).data('id')});
 			$(row).addClass('read');
+
+			badge = $('#feed-list li[data-feed-id="' + $(row).data('feed-id') + '"] .badge');
+			badge.html(badge.html()-1);
 		}
 
 		return false;
@@ -98,6 +111,7 @@ $(document).ready(function () {
 
 			row = $('<tr></tr>')
 				.data('id', value.id)
+				.data('feed-id', value.feed.id)
 				.append(feed)
 				.append(article);
 
