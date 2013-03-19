@@ -8,14 +8,17 @@ $(document).ready(function () {
 
 	// bind j/k navigation
 	$(document).on('keydown', function (e) {
-		if (e.target.tagName.toLowerCase() == 'input' ||
-			e.target.tagName.toLowerCase() == 'button' ||
-			e.target.tagName.toLowerCase() == 'select' ||
-			e.target.tagName.toLowerCase() == 'textarea') {
+		inputs = ['input', 'button', 'select', 'textarea'];
+		if (inputs.indexOf(e.target.tagName.toLowerCase()) > -1) {
 			return
 		}
 
 		char = String.fromCharCode(e.keyCode).toLowerCase();
+
+		if ('jk'.indexOf(char) == -1) {
+			return;
+		}
+
 		article = $('#articles .selected');
 
 		switch (char) {
@@ -29,6 +32,8 @@ $(document).ready(function () {
 			case 'k':
 				nextarticle = article.prev('tr');
 				break;
+			default:
+				return;
 		}
 
 		if (nextarticle) {

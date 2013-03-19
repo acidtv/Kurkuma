@@ -4,12 +4,26 @@ class Controller_Ajax_Read extends Kohana_Controller_Rest {
 
 	public function action_create()
 	{
-		$article = ORM::factory('Article', $this->request->post('article'));
+		$article_id = $this->request->post('article');
+		$feed_id = $this->request->post('feed');
+
 		$user = ORM::factory('User', 1);
+
+		if ( ! ($article_id || $feed_id))
+			throw new HTTP_Exception_400('Either an article or feed param is required to mark as read');
+
+		if ($article_id)
+		{
+			$articles = $article_id;
+		}
+		else
+		{
+			$articles = ORM::factory('Article')->get_unread_by_user($user, $feed);
+		}
 
 		try
 		{
-			$article->add('users', $user);
+			$user->add('articles', $articles);
 		}
 		catch (Database_Exception $e)
 		{

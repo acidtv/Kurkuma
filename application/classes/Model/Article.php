@@ -54,4 +54,24 @@ class Model_Article extends ORM {
 
 		return $articles;
 	}
+
+	public function get_unread_by_user(Model_User $user, Model_Feed $feed = null)
+	{
+		$sql = "select a.id from articles a";
+		$sql .= " left outer join users_articles_read uar on a.id = uar.article_id and uar.user_id = :user";
+		$sql .= " where uar.article_id is null";
+
+		if ($feed)
+		{
+			$sql .= " and a.feed_id = :feed";
+		}
+
+		$result = DB::query(Database::SELECT, $sql)
+			->param(':user', $user->pk())
+			->param(':feed', $feed->pk())
+			->execute()
+			->as_array('id');
+
+		return $result;
+	}
 }
