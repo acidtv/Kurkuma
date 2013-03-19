@@ -6,6 +6,36 @@ $(document).ready(function () {
 	// load bunch of articles
 	reset_articles();
 
+	// bind j/k navigation
+	$(document).on('keydown', function (e) {
+		if (e.target.tagName.toLowerCase() == 'input' ||
+			e.target.tagName.toLowerCase() == 'button' ||
+			e.target.tagName.toLowerCase() == 'select' ||
+			e.target.tagName.toLowerCase() == 'textarea') {
+			return
+		}
+
+		char = String.fromCharCode(e.keyCode).toLowerCase();
+		article = $('#articles .selected');
+
+		switch (char) {
+			case 'j':
+				if (article.length == 0) {
+					nextarticle = $('#articles tr:first');	
+				} else {
+					nextarticle = article.next('tr');
+				}
+				break;
+			case 'k':
+				nextarticle = article.prev('tr');
+				break;
+		}
+
+		if (nextarticle) {
+			show_article(nextarticle);
+		}
+	})
+
 	// show articles from selected feed
 	$('#feed-list').on('click', 'li', function() {
 		id = $(this).data('id');
@@ -18,32 +48,7 @@ $(document).ready(function () {
 	$('#articles').on('click', 'a.title', function() {
 		scroll = false;
 		row = $(this).parents('tr')[0];
-
-		if ( ! $(row).hasClass('selected')) {
-			scroll = true;
-		}
-
-		$('#articles tr').not(row).removeClass('selected');
-		$(row).toggleClass('selected');
-
-		if (scroll) {
-			// scroll to top
-			$('html, body').scrollTop($(row).offset().top-50);
-		}
-
-		// mark as read
-		if ( ! $(row).hasClass('read')) {
-			$.post('/ajax/read', {article: $(row).data('id')});
-			$(row).addClass('read');
-
-			badge = $('#feed-list li[data-feed-id="' + $(row).data('feed-id') + '"] .badge');
-			count = badge.html()-1;
-			if (count < 1) {
-				badge.hide();
-			} else {
-				badge.html(badge.html()-1);
-			}
-		}
+		show_article(row);
 
 		return false;
 	});
@@ -75,7 +80,37 @@ $(document).ready(function () {
 		$('#modal-add-feed form').submit();
 	});
 
+	function show_article(row) {
+		if ( ! $(row).hasClass('selected')) {
+			scroll = true;
+		}
+
+		$('#articles tr').not(row).removeClass('selected');
+		$(row).toggleClass('selected');
+
+		if (scroll) {
+			// scroll to top
+			$('html, body').scrollTop($(row).offset().top-50);
+		}
+
+		// mark as read
+		if ( ! $(row).hasClass('read')) {
+			$.post('/ajax/read', {article: $(row).data('id')});
+			$(row).addClass('read');
+
+			badge = $('#feed-list li[data-feed-id="' + $(row).data('feed-id') + '"] .badge');
+			count = badge.html()-1;
+			if (count < 1) {
+				badge.hide();
+			} else {
+				badge.html(badge.html()-1);
+			}
+		}
+	}
+
 	function reset_feeds() {
+		$('#feed-list').empty();
+
 		$.getJSON('/ajax/feeds', function(reply) {
 			if (reply.result != 'ok')
 				return;

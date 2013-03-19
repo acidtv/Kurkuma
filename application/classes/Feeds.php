@@ -85,7 +85,6 @@ class Feeds {
 		$client = $this->get_client($url);
 
 		$feed = ORM::factory('Feed');
-		$feed->user = $user;
 		$feed->url = $url;
 		$feed->name = $client->get_title();
 

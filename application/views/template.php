@@ -34,8 +34,9 @@
   </div>
 </div>
 
-<ul id="feed-list" class="nav nav-list affix" style="width: 150px;">
-  <li class="nav-header">Feeds</li>
+<ul id="xfeed-list" class="nav nav-list affix" style="width: 150px;">
+	<li class="nav-header">Feeds</li>
+	<span id="feed-list"></span>
 </ul>
 
 <div class="container">
