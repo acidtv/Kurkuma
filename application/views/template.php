@@ -23,7 +23,7 @@
 	  <a class="brand" href="#">Kurkuma</a>
 	  <div class="nav-collapse collapse">
 		<ul class="nav">
-		  <li><a><i class="icon-ok icon-white"></i> Mark All as Read</a></li>
+		  <li><a id="mark-feed-read"><i class="icon-ok icon-white"></i> Mark as Read</a></li>
 		  <li><a href="#modal-add-feed" role="button" data-toggle="modal"><i class="icon-plus icon-white"></i> Add Feed</a></li>
 <!--
 		  <li><a href="#contact">Contact</a></li>
@@ -34,7 +34,8 @@
   </div>
 </div>
 
-<ul id="xfeed-list" class="nav nav-list affix" style="width: 150px;">
+<ul id="feed-list-container" class="nav nav-list affix" style="width: 150px;">
+	<li id="all"><a>All articles</a></li>
 	<li class="nav-header">Feeds</li>
 	<span id="feed-list"></span>
 </ul>

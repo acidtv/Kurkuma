@@ -1,10 +1,12 @@
 
 $(document).ready(function () {
+	selected_feed = 0;
+
 	// load all feeds
 	reset_feeds();
 	
 	// load bunch of articles
-	reset_articles();
+	select_feed(0);
 
 	// bind j/k navigation
 	$(document).on('keydown', function (e) {
@@ -41,12 +43,15 @@ $(document).ready(function () {
 		}
 	})
 
+	// show all
+	$('#feed-list-container #all').on('click', function() {
+		select_feed(0);
+	});
+
 	// show articles from selected feed
 	$('#feed-list').on('click', 'li', function() {
 		id = $(this).data('id');
-		$.getJSON('/ajax/articles', {id: id}, function(reply) {
-			render_articles(reply.data);
-		});
+		select_feed(id);
 	});
 	
 	// show selected article
@@ -56,6 +61,13 @@ $(document).ready(function () {
 		show_article(row);
 
 		return false;
+	});
+
+	// mark current feed as read
+	$('#mark-feed-read').click(function ()  {
+		$.post('/ajax/read', {feed: selected_feed}, function (data) {
+			alert('yay');
+		});
 	});
 
 	// add new feed
@@ -84,6 +96,8 @@ $(document).ready(function () {
 	$('#modal-add-feed .btn-primary').click(function ()  {
 		$('#modal-add-feed form').submit();
 	});
+
+	$('')
 
 	function show_article(row) {
 		if ( ! $(row).hasClass('selected')) {
@@ -135,6 +149,16 @@ $(document).ready(function () {
 
 				$('#feed-list').append(row);
 			})
+		});
+	}
+
+	function select_feed(feed) {
+		$.getJSON('/ajax/articles', {feed: feed}, function(reply) {
+			if (reply.result != 'ok')
+				return;
+
+			selected_feed = feed;
+			render_articles(reply.data);
 		});
 	}
 

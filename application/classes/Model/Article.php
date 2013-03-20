@@ -39,7 +39,7 @@ class Model_Article extends ORM {
 
 		if ($feed)
 		{
-			$articles->where('feed_id', '=', $feed->pk());
+			$articles->where('article.feed_id', '=', $feed->pk());
 		}
 
 		$articles = $articles
@@ -66,11 +66,14 @@ class Model_Article extends ORM {
 			$sql .= " and a.feed_id = :feed";
 		}
 
-		$result = DB::query(Database::SELECT, $sql)
-			->param(':user', $user->pk())
-			->param(':feed', $feed->pk())
-			->execute()
-			->as_array('id');
+		$query = DB::query(Database::SELECT, $sql)
+			->param(':user', $user->pk());
+
+		if ($feed)
+		{
+			$query->param(':feed', $feed->pk());
+		}
+		$result = $query->execute()->as_array('id');
 
 		return $result;
 	}
