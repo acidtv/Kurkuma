@@ -33,19 +33,19 @@ class Controller_Ajax_Feeds extends Kohana_Controller_Rest {
 		);
 
 		// get articles
-		$articles = $feed->articles
-			->with('feed')
-			->find_all()
-			->as_array();
+		//$articles = $feed->articles
+			//->with('feed')
+			//->find_all()
+			//->as_array();
 
 		// convert article objects to array
-		$articles = array_map(function ($item) {
-			return $item->as_array();
-		}, $articles);
+		//$articles = array_map(function ($item) {
+			//return $item->as_array();
+		//}, $articles);
 
 		$return = array(
 			'result' => 'ok',
-			'data' => array('feed' => $feed->as_array(), 'articles' => $articles),
+			'data' => $feed->as_array(),
 		);
 
 		$this->response->headers('Content-Type', 'application/json');

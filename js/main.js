@@ -83,7 +83,7 @@ $(document).ready(function () {
 				return;
 
 			reset_feeds();
-			render_articles(reply.data.articles);
+			select_feed(reply.data.id);
 		});
 
 		$('#modal-add-feed').modal('hide');
@@ -96,8 +96,6 @@ $(document).ready(function () {
 	$('#modal-add-feed .btn-primary').click(function ()  {
 		$('#modal-add-feed form').submit();
 	});
-
-	$('')
 
 	function show_article(row) {
 		if ( ! $(row).hasClass('selected')) {

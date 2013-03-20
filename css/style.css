@@ -27,7 +27,7 @@
 	display: none;
 }
 
-#articles a.title {
+a {
 	cursor: pointer;
 }
 
