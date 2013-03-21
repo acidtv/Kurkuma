@@ -24,10 +24,7 @@
 	  <div class="nav-collapse collapse">
 		<ul class="nav">
 		  <li><a id="mark-feed-read"><i class="icon-ok icon-white"></i> Mark as Read</a></li>
-		  <li><a href="#modal-add-feed" role="button" data-toggle="modal"><i class="icon-plus icon-white"></i> Add Feed</a></li>
-<!--
-		  <li><a href="#contact">Contact</a></li>
--->
+		  <li><a id="add-feed"><i class="icon-plus icon-white"></i> Add Feed</a></li>
 		</ul>
 	  </div><!--/.nav-collapse -->
 	</div>
@@ -51,7 +48,7 @@
 			<div class="control-group">
 				<label class="control-label" for="url">Feed URL or Website</label>
 				<div class="controls">
-					<input type="text" id="url" name="url" placeholder="http://web.site">
+					<input type="text" id="url" name="url" placeholder="http://url/rss">
 				</div>
 			</div>
 		</form>

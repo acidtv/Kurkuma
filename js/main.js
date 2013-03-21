@@ -70,6 +70,17 @@ $(document).ready(function () {
 		});
 	});
 
+	// show add new feed form
+	$('#add-feed').click(function() {
+		$('#modal-add-feed').modal();
+		$('#modal-add-feed form input').focus();
+	});
+
+	// reset form on add-feed close
+	$('#modal-add-feed').on('hidden', function() {
+		$('#modal-add-feed form')[0].reset();
+	});
+
 	// add new feed
 	$('#modal-add-feed form').submit(function ()  {
 		
@@ -86,9 +97,7 @@ $(document).ready(function () {
 			select_feed(reply.data.id);
 		});
 
-		$('#modal-add-feed form').reset();
 		$('#modal-add-feed').modal('hide');
-
 		return false;
 	});
 
