@@ -86,8 +86,8 @@ $(document).ready(function () {
 			select_feed(reply.data.id);
 		});
 
-		$('#modal-add-feed').modal('hide');
 		$('#modal-add-feed form').reset();
+		$('#modal-add-feed').modal('hide');
 
 		return false;
 	});
@@ -101,6 +101,14 @@ $(document).ready(function () {
 		if ( ! $(row).hasClass('selected')) {
 			scroll = true;
 		}
+		
+		// start loading images
+		$(row).find('img').each(function() {
+			src = $(this).data('src');
+			if (src) {
+				$(this).attr('src', src);
+			}
+		})
 
 		$('#articles tr').not(row).removeClass('selected');
 		$(row).toggleClass('selected');

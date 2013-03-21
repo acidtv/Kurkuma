@@ -13,6 +13,22 @@ class Model_Article extends ORM {
 		)
 	);
 
+	public function filters()
+	{
+		//$filters = parent::filters();
+
+		//if ( ! is_array($filters))
+		//{
+			//$filters = array();
+		//}
+
+		$filters = array(
+			'content' => array(array(array($this, 'sanitize_content')))
+		);
+
+		return $filters;
+	}
+
 	private function format_date($date)
 	{
 		$timestamp = strtotime($date);
@@ -76,5 +92,48 @@ class Model_Article extends ORM {
 		$result = $query->execute()->as_array('id');
 
 		return $result;
+	}
+
+	public function sanitize_content($content)
+	{
+		$dom = new DOMDocument();
+
+		try
+		{
+			$dom->loadHTML($content);
+		}
+		catch (Exception $e)
+		{
+			// Ok, I tried to do this the nice way...
+			return 'could not parse document';
+		}
+
+		$stack = array($dom);
+		$i = 0;
+
+		while ($parent = array_shift($stack))
+		{
+			foreach ($parent->childNodes as $node)
+			{
+				if ($node instanceof DOMElement)
+				{
+					$src = trim($node->getAttribute('src'));
+
+					if ($src)
+					{
+						$node->setAttribute('src', '');
+						$node->setAttribute('data-src', $src);
+					}
+				}
+
+				if ($node->hasChildNodes())
+				{
+					// recursion is for noobs ;)
+					$stack[] = $node;
+				}
+			}
+		}
+
+		return $dom->saveHTML();
 	}
 }

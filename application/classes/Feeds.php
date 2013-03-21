@@ -23,6 +23,9 @@ class Feeds {
 		return $this;
 	}
 	
+	/**
+	 * Update all feeds
+	 */
 	public function update_all()
 	{
 		// loop feeds and update
@@ -39,7 +42,25 @@ class Feeds {
 		}
 	}
 
-	private function update_articles($feed, $client)
+	/**
+	 * Update a single feed
+	 */
+	public function update_single(Model_Feed $feed)
+	{
+		if ( ! $feed->loaded())
+			throw new Exception('Cannot update articles for new feed');
+
+		$client = $this->get_client();
+		$client->set_feed_url($feed->url);
+		$client->init();
+		$this->update_articles($feed, $client);
+	}
+
+	/**
+	 * A lower leven update function that uses existing
+	 * RSS client object
+	 */
+	private function update_articles(Model_Feed $feed, $client)
 	{
 		//echo $client->get_title() . "\n";
 		$articles = $client->get_items();
@@ -80,6 +101,9 @@ class Feeds {
 		return $articles;
 	}
 
+	/**
+	 * Add a new feed and update articles
+	 */
 	public function add_feed($url, $user)
 	{
 		$client = $this->get_client($url);
@@ -107,7 +131,7 @@ class Feeds {
 	}
 
 	/**
-	 * Return a new feed client
+	 * Return a new RSS client
 	 */
 	private function get_client($url = null)
 	{
