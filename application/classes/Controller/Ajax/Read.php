@@ -7,7 +7,7 @@ class Controller_Ajax_Read extends Kohana_Controller_Rest {
 		$article_id = $this->request->post('article');
 		$feed_id = $this->request->post('feed');
 
-		$user = ORM::factory('User', 1);
+		$user = Auth::instance()->get_user();
 
 		if ( ! ($article_id || $feed_id !== null))
 			throw new HTTP_Exception_400('Either an article or feed param is required to mark as read');

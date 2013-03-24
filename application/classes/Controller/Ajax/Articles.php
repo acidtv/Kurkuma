@@ -7,7 +7,7 @@ class Controller_Ajax_Articles extends Kohana_Controller_Rest {
 	 */
 	public function action_index()
 	{
-		$user = ORM::factory('User', 1);
+		$user = Auth::instance()->get_user();
 		$feed = null;
 
 		if ($this->request->query('feed'))

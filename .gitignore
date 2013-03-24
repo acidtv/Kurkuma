@@ -2,5 +2,7 @@ vendor/*
 application/cache/*
 application/logs/*
 application/config/database.php
+application/config/app.php
+application/config/auth.php
 .tags
 

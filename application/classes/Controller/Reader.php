@@ -1,10 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Welcome extends Controller_Template {
+class Controller_Reader extends Controller_Template {
+
+	public $template = 'template_reader';
 
 	public function action_index()
 	{
-		$view = View::factory('welcome');
+		$view = View::factory('feeds');
 		$this->template->content = $view;
 	}
 

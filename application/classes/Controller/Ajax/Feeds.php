@@ -7,7 +7,7 @@ class Controller_Ajax_Feeds extends Kohana_Controller_Rest {
 	 */
 	public function action_index()
 	{
-		$user = ORM::factory('User', 1);
+		$user = Auth::instance()->get_user();
 		$feeds = ORM::factory('Feed')->get_with_unread_count($user);
 
 		$return = array(
@@ -24,7 +24,7 @@ class Controller_Ajax_Feeds extends Kohana_Controller_Rest {
 	public function action_create()
 	{
 		$feeds = new Feeds();
-		$user = ORM::factory('User', 1);
+		$user = Auth::instance()->get_user();
 
 		// add feed and update articles
 		$feed = $feeds->add_feed(

@@ -22,7 +22,7 @@ else
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/timezones
  */
-date_default_timezone_set('America/Chicago');
+date_default_timezone_set('Europe/Amsterdam');
 
 /**
  * Set the default locale.
@@ -93,7 +93,8 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/kohana/',
+	'base_url'   => '/',
+	'index_file' => '',
 ));
 
 /**
@@ -120,6 +121,8 @@ Kohana::modules(array(
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
+
+Cookie::$salt = Kohana::$config->load('app.cookie_salt');
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
