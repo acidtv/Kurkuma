@@ -1,6 +1,6 @@
 <?
 
-class Controller_Ajax_Feeds extends Kohana_Controller_Rest {
+class Controller_Ajax_Feeds extends Controller_Ajax {
 
 	/**
 	 * Get all feeds

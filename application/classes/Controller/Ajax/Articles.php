@@ -1,6 +1,6 @@
 <?
 
-class Controller_Ajax_Articles extends Kohana_Controller_Rest {
+class Controller_Ajax_Articles extends Controller_Ajax {
 
 	/**
 	 * Get latest articles

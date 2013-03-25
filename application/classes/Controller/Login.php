@@ -17,13 +17,14 @@ class Controller_Login extends Controller_Template {
 	{
 		$user = $this->request->post('user');
 		$pass = $this->request->post('pass');
+		$remember = (bool)$this->request->post('remember');
 
-		if ( ! Auth::instance()->login($user, $pass))
+		if ( ! Auth::instance()->login($user, $pass, $remember))
 		{
 			Notification::instance()->add('Login failed');
 			return;
 		}
 
-		$this->redir('/reader');
+		$this->redirect('/reader');
 	}
 }

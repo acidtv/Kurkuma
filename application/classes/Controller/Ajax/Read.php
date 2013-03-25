@@ -1,6 +1,6 @@
 <?
 
-class Controller_Ajax_Read extends Kohana_Controller_Rest {
+class Controller_Ajax_Read extends Controller_Ajax {
 
 	public function action_create()
 	{

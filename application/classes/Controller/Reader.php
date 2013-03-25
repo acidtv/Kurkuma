@@ -2,6 +2,8 @@
 
 class Controller_Reader extends Controller_Template {
 
+	public $auth_required = array('login');
+
 	public $template = 'template_reader';
 
 	public function action_index()
