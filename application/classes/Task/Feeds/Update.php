@@ -31,9 +31,10 @@ class Task_Feeds_Update extends Minion_Task {
 
 		$feed = ORM::factory('Feed', $feed);
 
-		Minion_CLI::write('Updating ' . $feed->name);
+		Minion_CLI::write($feed->name . ' updating...');
 
 		$feeds = new Feeds();
+		$feeds->register_callback(function ($msg) { Minion_CLI::write($msg); });
 		$feeds->update_single($feed);
 	}
 

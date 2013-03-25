@@ -47,7 +47,8 @@ CREATE TABLE `feeds` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
-  `last_sync` datetime DEFAULT NULL,
+  `server_modified` varchar(100) DEFAULT NULL,
+  `server_etag` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url_UNIQUE` (`url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -173,4 +174,4 @@ CREATE TABLE `users_feeds` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-18 23:15:55
+-- Dump completed on 2013-03-25 23:22:44

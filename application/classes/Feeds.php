@@ -31,13 +31,11 @@ class Feeds {
 		// loop feeds and update
 		$feed = ORM::factory('Feed');
 		$feeds = $feed->find_all();
-		$client = $this->get_client();
 
 		foreach ($feeds as $feed)
 		{
-			$this->write('Updating ' . $feed->name);
-			$client->set_feed_url($feed->url);
-			$client->init();
+			$this->write($feed->name . ' updating...');
+			$client = $this->get_client($feed);
 			$this->update_articles($feed, $client);
 		}
 	}
@@ -50,9 +48,8 @@ class Feeds {
 		if ( ! $feed->loaded())
 			throw new Exception('Cannot update articles for new feed');
 
-		$client = $this->get_client();
-		$client->set_feed_url($feed->url);
-		$client->init();
+		$client = $this->get_client($feed);
+		$this->write($feed->name . ' got ' . $client->status());
 		$this->update_articles($feed, $client);
 	}
 
@@ -114,10 +111,10 @@ class Feeds {
 			return $feed;
 		}
 
-		$client = $this->get_client($url);
-
 		$feed = ORM::factory('Feed');
 		$feed->url = $url;
+		$client = $this->get_client($feed);
+
 		$feed->name = $client->get_title();
 
 		try
@@ -141,18 +138,21 @@ class Feeds {
 	/**
 	 * Return a new RSS client
 	 */
-	private function get_client($url = null)
+	private function get_client($feed)
 	{
-		$client = new SimplePie();
-		$client->enable_cache(false);
+		$client = RSSClient::factory($feed->url);
 
-		if ($url == null)
-			return $client;
+		if ($feed->loaded())
+		{
+			$client->modified($feed->server_modified);
+			$client->etag($feed->server_etag);
+		}
 
-		$client->set_feed_url($url);
+		$client->init();
 
-		if ( ! $client->init())
-			throw new Exception('Could not parse feed: ' . $url);
+		$feed->server_modified = $client->modified();
+		$feed->server_etag = $client->etag();
+		$feed->save();
 
 		return $client;
 	}
