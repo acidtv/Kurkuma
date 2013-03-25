@@ -6,5 +6,7 @@ abstract class Controller_Ajax extends Kohana_Controller_Rest {
 	{
 		if ( ! Auth::instance()->logged_in('login'))
 			throw new HTTP_Exception_403('Access denied, login required');
+
+		return parent::before();
 	}
 }

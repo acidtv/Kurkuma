@@ -51,6 +51,7 @@ class Model_Article extends ORM {
 				->and_where('uf.user_id', '=', $user->pk())
 			->join(array('users_articles_read', 'uar'), 'left outer')
 				->on('uar.article_id', '=', 'article.id')
+				->on('uar.user_id', '=', DB::expr($user->pk()))
 			->with('feed');
 
 		if ($feed)

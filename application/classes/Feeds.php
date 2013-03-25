@@ -106,6 +106,14 @@ class Feeds {
 	 */
 	public function add_feed($url, $user)
 	{
+		$feed = ORM::factory('Feed')->where('url', '=', $url)->find();
+
+		if ($feed->loaded())
+		{
+			$user->add('feeds', $feed);
+			return $feed;
+		}
+
 		$client = $this->get_client($url);
 
 		$feed = ORM::factory('Feed');
