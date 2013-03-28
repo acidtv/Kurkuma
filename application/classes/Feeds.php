@@ -24,23 +24,6 @@ class Feeds {
 	}
 	
 	/**
-	 * Update all feeds
-	 */
-	public function update_all()
-	{
-		// loop feeds and update
-		$feed = ORM::factory('Feed');
-		$feeds = $feed->find_all();
-
-		foreach ($feeds as $feed)
-		{
-			$this->write($feed->name . ' updating...');
-			$client = $this->get_client($feed);
-			$this->update_articles($feed, $client);
-		}
-	}
-
-	/**
 	 * Update a single feed
 	 */
 	public function update_single(Model_Feed $feed)
@@ -49,6 +32,13 @@ class Feeds {
 			throw new Exception('Cannot update articles for new feed');
 
 		$client = $this->get_client($feed);
+
+		if ( ! $client)
+		{
+			$this->write($feed->name . ' no new data ');
+			return;
+		}
+
 		$this->write($feed->name . ' got ' . $client->status());
 		$this->update_articles($feed, $client);
 	}
@@ -74,7 +64,7 @@ class Feeds {
 				'url' => 		$article->get_link(),
 				'content' => 	$article->get_content(),
 				'guid' => 		$article->get_id(),
-				'pub_date' => 	$article->get_date('Y-m-d H:i:s'),
+				'pub_date' => 	$article->get_gmdate('Y-m-d H:i:s'),
 				'author' => 	($article->get_author() ? $article->get_author()->get_name() : ''),
 			);
 			$object->values($values);
@@ -107,13 +97,18 @@ class Feeds {
 
 		if ($feed->loaded())
 		{
-			$user->add('feeds', $feed);
+			$this->_add_feed($user, $feed);
 			return $feed;
 		}
 
 		$feed = ORM::factory('Feed');
 		$feed->url = $url;
 		$client = $this->get_client($feed);
+
+		if ( ! $client)
+		{
+			throw new Exception('RSSClient did not return any data for new feed');
+		}
 
 		$feed->name = $client->get_title();
 
@@ -129,14 +124,29 @@ class Feeds {
 			// this feed already exists
 		}
 
-		$user->add('feeds', $feed);
+		$this->_add_feed($user, $feed);
 		$this->update_articles($feed, $client);
 
 		return $feed;
 	}
 
+	private function _add_feed($user, $feed)
+	{
+		try 
+		{
+			$user->add('feeds', $feed);
+		}
+		catch (Database_Exception $e)
+		{
+			// user is already subscribed to this feed, ignore
+			if ($e->getCode() != 1062)
+				throw $e;
+		}
+	}
+
 	/**
-	 * Return a new RSS client
+	 * Return a new RSS client.
+	 * This also update the feed url if there was a permanent redirect.
 	 */
 	private function get_client($feed)
 	{
@@ -148,10 +158,36 @@ class Feeds {
 			$client->etag($feed->server_etag);
 		}
 
-		$client->init();
+		try
+		{
+			$result = $client->init();
+		}
+		catch (Exception $e)
+		{
+			$this->write('Could not get feed contents: ' . $e->getMessage());
+			return false;
+		}
 
-		$feed->server_modified = $client->modified();
-		$feed->server_etag = $client->etag();
+		// permanent redirect, update url
+		if ($result['previous_status'] == 301)
+		{
+			$feed->url = $result['url'];
+		}
+
+		// not modified
+		if ($result['status'] == 304)
+			return false;
+		// success
+		elseif ($result['status'] == 200)
+		{
+			$feed->server_modified = $client->modified();
+			$feed->server_etag = $client->etag();
+		}
+		else
+		{
+			throw new Exception('Got invalid status: ' . $result['status']);
+		}
+
 		$feed->save();
 
 		return $client;

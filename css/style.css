@@ -1,4 +1,10 @@
 
+#feed-list-container {
+	overflow: hidden;
+	overflow-y: auto;
+	height: 90%;
+}
+
 #feed-list li {
 	/*width: 100px !important;*/
 	margin-bottom: 3px;

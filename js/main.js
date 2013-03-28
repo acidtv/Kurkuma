@@ -66,7 +66,8 @@ $(document).ready(function () {
 	// mark current feed as read
 	$('#mark-feed-read').click(function ()  {
 		$.post('/ajax/read', {feed: selected_feed}, function (data) {
-			alert('yay');
+			reset_feeds();
+			select_feed(selected_feed);
 		});
 	});
 
@@ -194,7 +195,7 @@ $(document).ready(function () {
 			feed = $('<td></td>').addClass('feed').html(value.feed.name);
 
 			title = $('<a></a>').addClass('title').html(value.title);
-			date = $('<span></span>').addClass('date').html(value._pub_date);
+			date = $('<span></span>').addClass('date').html(localize_date(value.pub_date));
 			content = $('<div></div>').addClass('content').html(value.content);
 			article = $('<td></td>')
 				.append(title)
@@ -213,5 +214,22 @@ $(document).ready(function () {
 
 			$('#articles').append(row);
 		})
+	}
+
+	function localize_date(utcdate) {
+		var now = new Date();
+		var date = new Date(utcdate + ' UTC');
+
+		if (''+now.getYear()+now.getMonth()+now.getDate() == ''+date.getYear()+date.getMonth()+date.getDate()) {
+			return date.getHours() + ':' + prefix(date.getMinutes());
+		}
+
+		datestr = date.getFullYear() + '-' + prefix(date.getMonth()) + '-' + prefix(date.getDate());
+		datestr += ' ' + prefix(date.getHours()) + ':' + prefix(date.getMinutes());
+		return datestr;
+	}
+
+	function prefix(nr) {
+		return ('0'+nr).substr(-2);
 	}
 })

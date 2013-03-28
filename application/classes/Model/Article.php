@@ -29,19 +29,6 @@ class Model_Article extends ORM {
 		return $filters;
 	}
 
-	private function format_date($date)
-	{
-		$timestamp = strtotime($date);
-		return date('j M, H:i', $timestamp);
-	}
-
-	public function as_array()
-	{
-		$array = parent::as_array();
-		$array['_pub_date'] = $this->format_date($array['pub_date']);
-		return $array;
-	}
-
 	public function get_by_user(Model_User $user, Model_Feed $feed = null, $limit = 100)
 	{
 		$articles = ORM::factory('Article')
