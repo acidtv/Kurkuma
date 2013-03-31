@@ -1,6 +1,6 @@
 <?
 
 return array(
-	'driver' => 'orm',
+	'driver' => 'ORM',
 	'hash_key' => 'foo',
 );
