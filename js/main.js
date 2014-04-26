@@ -151,16 +151,16 @@ $(document).ready(function () {
 				return;
 			
 			$.each(reply.data, function(key, value) {
-				feed = $('<a></a>')
-					.addClass('name')
-					.html(value.name);
 				badge = $('<span></span>')
 					.addClass('badge')
 					.html(value._unread);
+				feed = $('<a></a>')
+					.addClass('name')
+					.html(value.name)
+					.append(badge);
 				row = $('<li></li>')
 					.attr('data-feed-id', value.id)
 					.append(feed)
-					.append(badge)
 					.data('id', value.id)
 
 				$('#feed-list').append(row);
