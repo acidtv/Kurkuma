@@ -57,7 +57,7 @@ $(document).ready(function () {
 	// show selected article
 	$('#articles').on('click', 'a.title', function() {
 		scroll = false;
-		row = $(this).parents('tr')[0];
+		row = $(this).parents('.row')[0];
 		show_article(row);
 
 		return false;
@@ -120,7 +120,7 @@ $(document).ready(function () {
 			}
 		})
 
-		$('#articles tr').not(row).removeClass('selected');
+		$('#articles .row').not(row).removeClass('selected');
 		$(row).toggleClass('selected');
 
 		if (scroll) {
@@ -192,20 +192,20 @@ $(document).ready(function () {
 		window.scrollTo(0,0);
 
 		$.each(articles, function(key, value) {
-			feed = $('<td></td>').addClass('feed').html(value.feed.name);
+			//feed = $('<td></td>').addClass('feed').html(value.feed.name);
 
 			title = $('<a></a>').addClass('title').html(value.title);
 			date = $('<span></span>').addClass('date').html(localize_date(value.pub_date));
-			content = $('<div></div>').addClass('content').html(value.content);
-			article = $('<td></td>')
-				.append(title)
-				.append(date)
-				.append(content);
+			article = $('<div></div>')
+				.addClass('content')
+				.html(value.content);
 
-			row = $('<tr></tr>')
+			row = $('<div></div>')
+				.addClass('row')
 				.data('id', value.id)
 				.data('feed-id', value.feed.id)
-				.append(feed)
+				//.html(value.title);
+				.append(title)
 				.append(article);
 
 			if (value._read) {
