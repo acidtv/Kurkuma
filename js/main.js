@@ -116,7 +116,9 @@ $(document).ready(function () {
 		$(row).find('img').each(function() {
 			src = $(this).data('src');
 			if (src) {
-				$(this).attr('src', src);
+				$(this)
+					.addClass('img-responsive')
+					.attr('src', src);
 			}
 		})
 

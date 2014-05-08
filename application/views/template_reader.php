@@ -88,7 +88,7 @@
 	<!-- article row template -->
     <div id="template-row" class="row hide">
       <a class="title"></a>
-      <span class="date"></span>
+      <span class="date hidden-xs hidden-sm"></span>
       <div class="info">
         <span class="date"></span> &mdash;
         <a href="" class="feed"></a>
