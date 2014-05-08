@@ -103,9 +103,13 @@ a {
 	cursor: pointer;
 }
 
-#articles span.date {
+#articles .row > span.date {
 	float: right;
 	color: #AAA;
+}
+
+#articles .row.selected > span.date {
+	display: none;
 }
 
 #articles .feed {
@@ -143,7 +147,7 @@ a {
 }
 
 #articles .selected a.title {
-	font-size: 20px;
+	font-size: 22px;
 	color: black;
 	margin-bottom: 10px;
 }
@@ -167,4 +171,15 @@ a {
 #articles .content img {
 	display: block;
 	margin-bottom: 10px;
+}
+
+#articles .info {
+	display: none;
+	clear: left;
+	font-size: 14px;
+	color: grey;
+}
+
+#articles .selected .info {
+	display: block;
 }

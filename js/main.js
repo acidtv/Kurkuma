@@ -26,13 +26,13 @@ $(document).ready(function () {
 		switch (char) {
 			case 'j':
 				if (article.length == 0) {
-					nextarticle = $('#articles tr:first');	
+					nextarticle = $('#articles div.row:first');	
 				} else {
-					nextarticle = article.next('tr');
+					nextarticle = article.next('div.row');
 				}
 				break;
 			case 'k':
-				nextarticle = article.prev('tr');
+				nextarticle = article.prev('div.row');
 				break;
 			default:
 				return;
@@ -192,21 +192,18 @@ $(document).ready(function () {
 		window.scrollTo(0,0);
 
 		$.each(articles, function(key, value) {
-			//feed = $('<td></td>').addClass('feed').html(value.feed.name);
-
-			title = $('<a></a>').addClass('title').html(value.title);
-			date = $('<span></span>').addClass('date').html(localize_date(value.pub_date));
-			article = $('<div></div>')
-				.addClass('content')
-				.html(value.content);
-
-			row = $('<div></div>')
-				.addClass('row')
+			row = $('#template-row')
+				.clone()
+				.removeClass('hide')
 				.data('id', value.id)
-				.data('feed-id', value.feed.id)
-				//.html(value.title);
-				.append(title)
-				.append(article);
+				.data('feed-id', value.feed.id);
+			$('.title', row).html(value.title)
+			$('.feed', row)
+				.attr('href', value.url)
+				.html(value.feed.name)
+			$('.url', row).html(value.url)
+			$('.date', row).html(localize_date(value.pub_date))
+			$('.content', row).html(value.content)
 
 			if (value._read) {
 				row.addClass('read');

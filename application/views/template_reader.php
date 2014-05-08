@@ -85,6 +85,17 @@
       </div>
     </div>
 
+	<!-- article row template -->
+    <div id="template-row" class="row hide">
+      <a class="title"></a>
+      <span class="date"></span>
+      <div class="info">
+        <span class="date"></span> &mdash;
+        <a href="" class="feed"></a>
+      </div>
+      <div class="content"></div>
+	</div>
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/underscore.min.js"></script>
