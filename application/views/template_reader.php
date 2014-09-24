@@ -68,20 +68,22 @@
 
     <!-- add feed modal -->
     <div id="modal-add-feed" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header"><h3>Add Feed</h3></div>
-        <div class="modal-body">
-          <form class="form-horizontal">
-            <div class="control-group">
-              <label class="control-label" for="url">Feed URL</label>
-              <div class="controls">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header"><h4 class="modal-title">Add Feed</h4></div>
+          <div class="modal-body">
+            <form class="form-horizontal" role="form">
+			  <label class="control-label" for="url">Feed URL</label>
+              <span>
                 <input type="text" id="url" name="url" placeholder="">
-              </div>
-            </div>
-          </form>
+              </span>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Add Feed</button>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-          <button class="btn btn-primary">Add Feed</button>
       </div>
     </div>
 

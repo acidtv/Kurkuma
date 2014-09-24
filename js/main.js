@@ -73,7 +73,7 @@ $(document).ready(function () {
 
 	// show add new feed form
 	$('#add-feed').click(function() {
-		$('#modal-add-feed').modal();
+		$('#modal-add-feed').removeClass('hide').modal();
 		$('#modal-add-feed form input').focus();
 	});
 
@@ -198,11 +198,11 @@ $(document).ready(function () {
 				.clone()
 				.removeClass('hide')
 				.data('id', value.id)
-				.data('feed-id', value.feed.id);
+				.data('feed-id', value.feed_id);
 			$('.title', row).html(value.title)
 			$('.feed', row)
 				.attr('href', value.url)
-				.html(value.feed.name)
+				.html(value.feed_name)
 			$('.url', row).html(value.url)
 			$('.date', row).html(localize_date(value.pub_date))
 			$('.content', row).html(value.content)

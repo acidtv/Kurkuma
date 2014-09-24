@@ -46,6 +46,13 @@ body {
 }
 
 /*
+ * Modal
+ */
+input#url {
+	width: 300px;
+}
+
+/*
  * Main content
  */
 
