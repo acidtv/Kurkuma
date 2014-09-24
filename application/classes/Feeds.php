@@ -22,7 +22,7 @@ class Feeds {
 
 		return $this;
 	}
-	
+
 	/**
 	 * Update a single feed
 	 */
@@ -64,7 +64,7 @@ class Feeds {
 				'url' => 		$article->get_link(),
 				'content' => 	$article->get_content(),
 				'guid' => 		$article->get_id(),
-				'pub_date' => 	$article->get_gmdate('Y-m-d H:i:s'),
+				'pub_date' => 	$article->get_gmdate('Y-m-d H:i:s') ?: date('Y-m-d H:i:s'),
 				'author' => 	($article->get_author() ? $article->get_author()->get_name() : ''),
 			);
 			$object->values($values);
@@ -132,7 +132,7 @@ class Feeds {
 
 	private function _add_feed($user, $feed)
 	{
-		try 
+		try
 		{
 			$user->add('feeds', $feed);
 		}

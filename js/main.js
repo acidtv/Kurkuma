@@ -239,7 +239,7 @@ $(document).ready(function () {
 
 	function localize_date(utcdate) {
 		var now = new Date();
-		var date = new Date(utcdate + ' UTC');
+		var date = new Date(utcdate);
 
 		if (''+now.getYear()+now.getMonth()+now.getDate() == ''+date.getYear()+date.getMonth()+date.getDate()) {
 			return date.getHours() + ':' + prefix(date.getMinutes());
