@@ -63,6 +63,21 @@ $(document).ready(function () {
 		return false;
 	});
 
+	// remove feed
+	$('#remove-feed').click(function ()  {
+		if (selected_feed == 0) {
+			return;
+		}
+
+		$.ajax('/ajax/feeds/' + selected_feed, {
+			type: 'delete',
+			success: function () {
+				reset_feeds();
+				select_feed(0);
+			}
+		});
+	});
+
 	// mark current feed as read
 	$('#mark-feed-read').click(function ()  {
 		$.post('/ajax/read', {feed: selected_feed}, function (data) {
@@ -171,6 +186,13 @@ $(document).ready(function () {
 	}
 
 	function select_feed(feed) {
+		if (feed == 0) {
+			$('#remove-feed').hide()
+		}
+		else {
+			$('#remove-feed').show()
+		}
+
 		$.getJSON('/ajax/articles', {feed: feed}, function(reply) {
 			if (reply.result != 'ok')
 				return;

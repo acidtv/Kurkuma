@@ -52,6 +52,10 @@ input#url {
 	width: 300px;
 }
 
+#modal-add-feed {
+	overflow-y: hidden;
+}
+
 /*
  * Main content
  */

@@ -128,7 +128,7 @@ Cookie::$salt = Kohana::$config->load('app.cookie_salt');
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-Route::set('ajax', 'ajax/<controller>')
+Route::set('ajax', 'ajax/<controller>(/<id>)')
 	->defaults(array(
 		'directory' => 'ajax',
 		'action'     => 'index',

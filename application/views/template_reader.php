@@ -38,8 +38,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-		    <li><a id="mark-feed-read"><i class="icon-ok icon-white"></i> Mark as Read</a></li>
-		    <li><a id="add-feed"><i class="icon-plus icon-white"></i> Add Feed</a></li>
+		    <li><a id="remove-feed"><i class="glyphicon glyphicon-minus"></i> Remove feed</a></li>
+			<li><a id="mark-feed-read"><i class="glyphicon glyphicon-ok"></i> Mark as Read</a></li>
+		    <li><a id="add-feed"><i class="glyphicon glyphicon-plus"></i> Add Feed</a></li>
           </ul>
         </div>
       </div>

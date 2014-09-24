@@ -28,13 +28,31 @@ class Controller_Ajax_Feeds extends Controller_Ajax {
 
 		// add feed and update articles
 		$feed = $feeds->add_feed(
-			$this->request->post('url'), 
+			$this->request->post('url'),
 			$user
 		);
 
 		$return = array(
 			'result' => 'ok',
 			'data' => $feed->as_array(),
+		);
+
+		$this->response->headers('Content-Type', 'application/json');
+		$this->response->body(json_encode($return));
+	}
+
+	/**
+	 * Remove a user/feed connection
+	 */
+	public function action_delete()
+	{
+		$user = Auth::instance()->get_user();
+		$feed = ORM::factory('Feed', $this->request->param('id'));
+
+		$user->remove('feeds', $feed);
+
+		$return = array(
+			'result' => 'ok',
 		);
 
 		$this->response->headers('Content-Type', 'application/json');
