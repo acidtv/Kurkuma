@@ -191,6 +191,14 @@ a {
 	color: grey;
 }
 
+#articles .info .fave {
+	color: #DDD;
+}
+
+#articles .info .fave.active {
+	color: orange;
+}
+
 #articles .selected .info {
 	display: block;
 }

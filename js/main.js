@@ -10,14 +10,16 @@ $(document).ready(function () {
 
 	// bind j/k navigation
 	$(document).on('keydown', function (e) {
+		// don't act on input elements
 		inputs = ['input', 'button', 'select', 'textarea'];
 		if (inputs.indexOf(e.target.tagName.toLowerCase()) > -1) {
 			return
 		}
 
+		// get typed character
 		char = String.fromCharCode(e.keyCode).toLowerCase();
 
-		if ('jk'.indexOf(char) == -1) {
+		if ('jks'.indexOf(char) == -1) {
 			return;
 		}
 
@@ -30,16 +32,17 @@ $(document).ready(function () {
 				} else {
 					nextarticle = article.next('div.row');
 				}
+
+				show_article(nextarticle);
+
 				break;
 			case 'k':
-				nextarticle = article.prev('div.row');
+				show_article(article.prev('div.row'));
 				break;
+			case 's':
+				toggle_fave(article);
 			default:
 				return;
-		}
-
-		if (nextarticle) {
-			show_article(nextarticle);
 		}
 	})
 
@@ -211,15 +214,22 @@ $(document).ready(function () {
 		});
 	}
 
+	// toggle fave on/off
+	function toggle_fave(article) {
+		$.post('/ajax/favourites', {article: $(article).data('id')});
+		$(article).find('.fave').toggleClass('active');
+	}
+
 	function render_articles(articles) {
 		$('#articles').empty();
 		window.scrollTo(0,0);
 
 		$.each(articles, function(key, value) {
-			row = $('#template-row')
-				.clone()
+			// clone and assign new id
+			row = $('#template-row').clone().attr('id', 'article-' + value.id);
+
+			row.data('id', value.id)
 				.removeClass('hide')
-				.data('id', value.id)
 				.data('feed-id', value.feed_id);
 			$('.title', row).html(value.title)
 			$('.feed', row)
@@ -231,6 +241,10 @@ $(document).ready(function () {
 
 			if (value._read) {
 				row.addClass('read');
+			}
+
+			if (value._fave == '1') {
+				$('.fave', row).addClass('active');
 			}
 
 			$('#articles').append(row);

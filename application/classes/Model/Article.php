@@ -31,11 +31,12 @@ class Model_Article extends ORM {
 
 	public function get_by_user(Model_User $user, Model_Feed $feed = null, $limit = 100)
 	{
-		$sql = "select a.*, f.name as feed_name, f.id as feed_id,uar.article_id as _read from articles a";
+		$sql = "select a.*, f.name as feed_name, f.id as feed_id,uar.article_id as _read, if(fa.id, 1, 0) as _fave";
+		$sql .= " from articles a";
 		$sql .= " inner join feeds f on a.feed_id = f.id";
 		$sql .= " inner join users_feeds uf on a.feed_id = uf.feed_id and uf.user_id = :user";
 		$sql .= " left outer join users_articles_read uar on uar.article_id = a.id and uar.user_id = :user";
-
+		$sql .= " left outer join favourites fa on fa.article_id = a.id and fa.user_id = :user";
 
 		if ($feed)
 		{
@@ -56,31 +57,6 @@ class Model_Article extends ORM {
 			->param(':limit', $limit)
 			->execute()
 			->as_array();
-
-		//$articles = ORM::factory('Article')
-			//->select(array('uar.article_id', '_read'))
-			//->join(array('users_feeds', 'uf'), 'inner')
-				//->on('article.feed_id', '=', 'uf.feed_id')
-				//->and_where('uf.user_id', '=', $user->pk())
-			//->join(array('users_articles_read', 'uar'), 'left outer')
-				//->on('uar.article_id', '=', 'article.id')
-				//->on('uar.user_id', '=', DB::expr($user->pk()))
-			//->with('feed');
-
-		//if ($feed)
-		//{
-			//$articles->where('article.feed_id', '=', $feed->pk());
-		//}
-
-		//$articles = $articles
-			//->order_by('pub_date', 'desc')
-			//->limit(100)
-			//->find_all()
-			//->as_array();
-
-		//$articles = array_map(function ($item) {
-			//return $item->as_array();
-		//}, $articles);
 
 		return $articles;
 	}
