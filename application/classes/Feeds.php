@@ -44,7 +44,7 @@ class Feeds {
 	}
 
 	/**
-	 * A lower leven update function that uses existing
+	 * A lower level update function that uses existing
 	 * RSS client object
 	 */
 	private function update_articles(Model_Feed $feed, $client)
