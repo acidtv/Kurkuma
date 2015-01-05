@@ -15,13 +15,6 @@ class Model_Article extends ORM {
 
 	public function filters()
 	{
-		//$filters = parent::filters();
-
-		//if ( ! is_array($filters))
-		//{
-			//$filters = array();
-		//}
-
 		$filters = array(
 			'content' => array(array(array($this, 'sanitize_content')))
 		);
@@ -29,19 +22,34 @@ class Model_Article extends ORM {
 		return $filters;
 	}
 
-	public function get_by_user(Model_User $user, Model_Feed $feed = null, $limit = 100)
+	/**
+	 * Return articles filtered by user_id
+	 */
+	public function get_by_user(Model_User $user, Model_Feed $feed = null, $faves = false, $limit = 100)
 	{
+		$faves = (bool)$faves;
+
 		$sql = "select a.*, f.name as feed_name, f.id as feed_id,uar.article_id as _read, if(fa.id, 1, 0) as _fave";
 		$sql .= " from articles a";
 		$sql .= " inner join feeds f on a.feed_id = f.id";
 		$sql .= " inner join users_feeds uf on a.feed_id = uf.feed_id and uf.user_id = :user";
 		$sql .= " left outer join users_articles_read uar on uar.article_id = a.id and uar.user_id = :user";
-		$sql .= " left outer join favourites fa on fa.article_id = a.id and fa.user_id = :user";
+
+		if ($faves)
+		{
+			$sql .= " inner join favourites fa on fa.article_id = a.id and fa.user_id = :user";
+		}
+		else
+		{
+			$sql .= " left outer join favourites fa on fa.article_id = a.id and fa.user_id = :user";
+		}
+
+		$sql .= " where 1=1";
 
 		if ($feed)
 		{
 			$feed = $feed->pk();
-			$sql .= " where a.feed_id = :feed";
+			$sql .= " and a.feed_id = :feed";
 		}
 
 		$sql .= " order by pub_date desc";
