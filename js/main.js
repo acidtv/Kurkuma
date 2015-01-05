@@ -51,6 +51,11 @@ $(document).ready(function () {
 		select_feed(0);
 	});
 
+	// show faves
+	$('#feed-list-container #faves').on('click', function() {
+		select_feed(0, true);
+	});
+
 	// show articles from selected feed
 	$('#feed-list').on('click', 'li', function() {
 		id = $(this).data('id');
@@ -188,7 +193,7 @@ $(document).ready(function () {
 		});
 	}
 
-	function select_feed(feed) {
+	function select_feed(feed, faves) {
 		if (feed == 0) {
 			$('#remove-feed').hide()
 		}
@@ -196,12 +201,15 @@ $(document).ready(function () {
 			$('#remove-feed').show()
 		}
 
-		$.getJSON('/ajax/articles', {feed: feed}, function(reply) {
+		$.getJSON('/ajax/articles', {feed: feed, faves: faves}, function(reply) {
 			if (reply.result != 'ok')
 				return;
 
 			selected_feed = feed;
 			render_articles(reply.data);
+			
+			// footer is hidden by default, because other it flashes while articles are being loaded
+			$('#articles-footer').show();
 		});
 	}
 

@@ -101,7 +101,7 @@ input#url {
 	/*padding-top: 0px;*/
 /*}*/
 
-.row {
+#articles .row {
   padding: 7px;
   border-bottom: 1px solid #CCC;
 }
@@ -201,4 +201,12 @@ a {
 
 #articles .selected .info {
 	display: block;
+}
+
+#articles-footer {
+	font-size: 40px;
+	text-align: center;
+	margin-top: 30px;
+	color: #AAA;
+	display: none;
 }

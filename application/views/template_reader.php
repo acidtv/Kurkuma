@@ -39,8 +39,8 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
 		    <li><a id="remove-feed"><i class="glyphicon glyphicon-minus"></i> Remove feed</a></li>
-			<li><a id="mark-feed-read"><i class="glyphicon glyphicon-ok"></i> Mark as Read</a></li>
-		    <li><a id="add-feed"><i class="glyphicon glyphicon-plus"></i> Add Feed</a></li>
+			<li><a id="mark-feed-read">✓ Mark as Read</a></li>
+		    <li><a id="add-feed">➕ Add Feed</a></li>
           </ul>
         </div>
       </div>
@@ -54,6 +54,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul id="feed-list-container" class="nav nav-sidebar">
             <li id="all"><a>All articles</a></li>
+			<li id="faves"><a>Favourites</a></li>
           </ul>
           <ul id="feed-list" class="nav nav-sidebar">
           </ul>
@@ -62,6 +63,7 @@
         <!-- articles -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <?=$content?>
+		  <div id="articles-footer">❁</div>
         </div>
 
       </div>
