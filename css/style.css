@@ -130,6 +130,9 @@ a {
 
 #articles a.title {
 	float: left;
+}
+
+#articles .row:not(.selected) a.title {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
