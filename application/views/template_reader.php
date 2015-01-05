@@ -93,7 +93,8 @@
 	<!-- article row template -->
     <div id="template-row" class="row hide">
       <a class="title"></a>
-      <span class="date hidden-xs hidden-sm"></span>
+	  <!--<span class="date hidden-xs hidden-sm"></span>-->
+	  <span class="feed-name hidden-xs hidden-sm"></span>
       <div class="info">
 		<span class="fave">★</span>
         <span class="date"></span> &mdash;

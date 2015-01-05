@@ -243,6 +243,7 @@ $(document).ready(function () {
 			$('.feed', row)
 				.attr('href', value.url)
 				.html(value.feed_name)
+			$('.feed-name', row).html(value.feed_name)
 			$('.url', row).html(value.url)
 			$('.date', row).html(localize_date(value.pub_date))
 			$('.content', row).html(value.content)

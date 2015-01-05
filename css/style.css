@@ -75,31 +75,14 @@ input#url {
   margin-top: 0;
 }
 
-/*#feed-list-container {*/
-	/*overflow: hidden;*/
-	/*overflow-y: auto;*/
-	/*height: 90%;*/
-/*}*/
-
-/*#feed-list li {*/
-	/*margin-bottom: 3px;*/
-	/*float: left;*/
-	/*width: 150px;*/
-/*}*/
-
 #feed-list .badge {
 	float: right;
 	margin-right: 10px;
 }
 
-/*#feed-list .name {*/
-	/*width: 100px;*/
-	/*float: left;*/
-	/*white-space: nowrap;*/
-	/*overflow: hidden;*/
-	/*text-overflow: ellipsis;*/
-	/*padding-top: 0px;*/
-/*}*/
+#articles {
+	margin-top: 5px;
+}
 
 #articles .row {
   padding: 7px;
@@ -117,9 +100,24 @@ a {
 #articles .row > span.date {
 	float: right;
 	color: #AAA;
+	margin-left: 5px;
 }
 
 #articles .row.selected > span.date {
+	display: none;
+}
+
+#articles .row > span.feed-name {
+	margin-left: 5px;
+	color: #AAA;
+	float: right;
+	max-width: 120px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#articles .row.selected > span.feed-name {
 	display: none;
 }
 
@@ -132,7 +130,10 @@ a {
 
 #articles a.title {
 	float: left;
+	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 100%
 }
 
 #articles .selected {
