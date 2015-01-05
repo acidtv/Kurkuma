@@ -195,12 +195,13 @@ a {
 	color: grey;
 }
 
-#articles .info .fave {
-	color: #DDD;
+#articles .info .fave a {
+	color: #DDD !important;
+	text-decoration: none;
 }
 
-#articles .info .fave.active {
-	color: orange;
+#articles .info .fave.active a {
+	color: orange !important;
 }
 
 #articles .selected .info {

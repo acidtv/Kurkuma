@@ -96,7 +96,7 @@
 	  <!--<span class="date hidden-xs hidden-sm"></span>-->
 	  <span class="feed-name hidden-xs hidden-sm"></span>
       <div class="info">
-		<span class="fave">★</span>
+		<span class="fave"><a href="">★</a></span>
         <span class="date"></span> &mdash;
         <a href="" class="feed"></a>
       </div>

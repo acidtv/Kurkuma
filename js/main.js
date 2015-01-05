@@ -46,6 +46,12 @@ $(document).ready(function () {
 		}
 	})
 
+	// mark as fave
+	$('#articles').on('click', '.row .fave a', function(e) {
+		toggle_fave($('#articles .selected'));
+		return false;
+	});
+
 	// show all
 	$('#feed-list-container #all').on('click', function() {
 		select_feed(0);
