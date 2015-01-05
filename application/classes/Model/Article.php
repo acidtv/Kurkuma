@@ -103,7 +103,7 @@ class Model_Article extends ORM {
 		catch (Exception $e)
 		{
 			// Ok, I tried to do this the nice way...
-			return 'could not parse document';
+			return str_replace('src=', 'data-src=', $content);
 		}
 
 		$stack = array($dom);
