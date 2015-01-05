@@ -38,7 +38,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-		    <li><a id="remove-feed"><i class="glyphicon glyphicon-minus"></i> Remove feed</a></li>
+		    <li><a id="remove-feed">✘ Remove feed</a></li>
 			<li><a id="mark-feed-read">✓ Mark as Read</a></li>
 		    <li><a id="add-feed">➕ Add Feed</a></li>
           </ul>
