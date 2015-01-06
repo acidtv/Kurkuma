@@ -111,7 +111,7 @@ class RSSClient {
 	private function get_request()
 	{
 		$request = Request::factory($this->url);
-		$request->headers('user-agent', 'Kurkuma RSS Reader v1');
+		$request->headers('User-Agent', 'Kurkuma RSS Reader v1');
 
 		if ($this->modified)
 		{
