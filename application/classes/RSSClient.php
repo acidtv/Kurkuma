@@ -110,7 +110,17 @@ class RSSClient {
 
 	private function get_request()
 	{
+		$split_url = explode('?', $this->url);
+		$url = array_shift($split_url);
+		$params = array();
+
+		if ($split_url)
+		{
+			parse_str($split_url[0], $params);
+		}
+
 		$request = Request::factory($this->url);
+		$request->query($params);
 		$request->headers('User-Agent', 'Kurkuma RSS Reader v1');
 
 		if ($this->modified)
