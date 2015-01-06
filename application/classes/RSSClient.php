@@ -38,7 +38,7 @@ class RSSClient {
 		$this->modified = $modified;
 		return $this;
 	}
-	
+
 	public function etag($etag = null)
 	{
 		if ($etag == null)
@@ -111,6 +111,7 @@ class RSSClient {
 	private function get_request()
 	{
 		$request = Request::factory($this->url);
+		$request->headers('user-agent', 'Kurkuma RSS Reader v1');
 
 		if ($this->modified)
 		{
