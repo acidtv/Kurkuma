@@ -46,6 +46,13 @@ $(document).ready(function () {
 		}
 	})
 
+    var msie6 = $.browser == "msie" && $.browser.version < 7;
+    if (!msie6) {
+        $(window).scroll(function(event) {
+			check_next_article_fixed();
+        });
+    }
+	
 	// mark as fave
 	$('#articles').on('click', '.row .fave a', function(e) {
 		toggle_fave($('#articles .selected'));
@@ -154,6 +161,12 @@ $(document).ready(function () {
 		$('#articles .row').not(row).removeClass('selected');
 		$(row).toggleClass('selected');
 
+		// remove .next tag
+		$('#articles div.row').removeClass('next fixed');
+
+		// mark next article
+		$(row).next('div.row').addClass('next');
+
 		if (scroll) {
 			// scroll to top
 			$('html, body').scrollTop($(row).offset().top-50);
@@ -171,6 +184,26 @@ $(document).ready(function () {
 			} else {
 				badge.html(badge.html()-1);
 			}
+		}
+
+	}
+
+	function check_next_article_fixed() {
+		var elm = $("#articles .row.next");
+		var selected = $('#articles .selected');
+
+		if (elm.length == 0 || selected.length == 0) {
+			return;
+		}
+
+		var top = selected.offset().top + selected.height() + elm.height();
+		var windowtop = $(window).scrollTop();
+		var windowheight = $(window).height();
+
+		if ((top-windowtop) > windowheight) {
+			elm.addClass("fixed")
+		} else {
+			elm.removeClass("fixed")
 		}
 	}
 
