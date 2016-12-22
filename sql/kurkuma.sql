@@ -20,20 +20,21 @@
 --
 
 DROP TABLE IF EXISTS `articles`;
+CREATE TABLE `articles` (
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`feed_id` int(10) unsigned NOT NULL,
+	`title` varchar(255) NOT NULL,
+	`url` varchar(255) NOT NULL,
+	`content` text,
+	`guid` varchar(255) DEFAULT NULL,
+	`pub_date` datetime DEFAULT NULL,
+	`author` varchar(255) DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `guid` (`guid`),
+	KEY `get_by_user_pub_date` (`pub_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `articles` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `feed_id` int(10) unsigned NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `content` text,
-  `guid` varchar(255) DEFAULT NULL,
-  `pub_date` datetime DEFAULT NULL,
-  `author` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `index2` (`feed_id`,`guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
